@@ -1,6 +1,8 @@
 import { Build, BuildCircleOutlined, CenterFocusStrongOutlined, CenterFocusStrongTwoTone, DepartureBoardTwoTone, GiteOutlined, Home, HouseOutlined, Rule, Title, Unarchive, Work } from '@mui/icons-material';
+import { Box, Button, IconButton } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { BsPlus, BsPlusCircleFill } from 'react-icons/bs';
 
 import {
         FaBars,
@@ -25,7 +27,7 @@ const Sidebar = ({ children }) => {
                         name: t("المجموعات"),
                         icon: <GiteOutlined />
                 },
- 
+
         ]
         return (
                 <div>
@@ -37,7 +39,35 @@ const Sidebar = ({ children }) => {
                                                 <div style={{ marginLeft: isOpen ? "50px" : "0px" }} className="bars">
                                                         <FaBars onClick={toggle} />
                                                 </div>
+
                                         </div>
+                                        {isOpen &&
+                                                <Box sx={{
+                                                        backgroundColor: '#1976D2',
+                                                        color: 'white',
+                                                        justifyContent: 'center',
+                                                        textAlign: 'center',
+                                                        width: '100px',
+                                                        display: 'flex',
+                                                        borderRadius: '10px',
+                                                        m: 2,
+                                                        p: 1
+
+                                                }}>
+                                                        <IconButton >
+                                                                <BsPlusCircleFill sx={{ backgroundColor: 'white', color: 'red', }} />
+                                                        </IconButton>
+                                                        <Button sx={{
+                                                                color: 'white',
+                                                                fontFamily: 'Cairo',
+                                                                fontSize: '18px',
+                                                                alignContent: 'center'
+                                                        }}>إضافة
+                                                        </Button>
+                                                </Box>
+                                        }
+
+
                                         {
                                                 menuItem.map((item, index) => (
                                                         <NavLink to={item.path} key={index} className="link" activeclassName="active">

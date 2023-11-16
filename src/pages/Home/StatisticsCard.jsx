@@ -1,56 +1,30 @@
-import { Box, Typography } from '@mui/material';
 import React from 'react';
+import { Box, IconButton, Typography } from '@mui/material';
+import { DragIndicator, Folder } from '@mui/icons-material';
 import '../../App.css';
-import { BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, BsFillBellFill }
-        from 'react-icons/bs'
-const StatisticsCard = () => {
+
+const StatisticsCard = ({ title }) => {
         return (
-                <div className='main-cards'>
-                        <div className='card'>
-                                <div className='card-inner'>
-                                        <h3>المستفيدين</h3>
-                                        <BsFillArchiveFill className='card_icon' />
-                                </div>
-                                <Typography sx={{ fontFamily: 'Cairo', color: 'white', fontSize: '30px' }}>300</Typography>
-                        </div>
-                        <div className='card'>
-                                <div className='card-inner'>
-                                        <h3>الموظفين</h3>
-                                        <BsFillGrid3X3GapFill className='card_icon' />
-                                </div>
-                                <Typography sx={{ fontFamily: 'Cairo', color: 'white', fontSize: '30px' }}>68</Typography>
-
-                        </div>
-                        <div className='card'>
-                                <div className='card-inner'>
-                                        <h3>مستخدمي التطبيق'</h3>
-                                        <BsPeopleFill className='card_icon' />
-                                </div>
-                                <Typography sx={{ fontFamily: 'Cairo', color: 'white', fontSize: '30px' }}>20</Typography>
-
-                        </div>
-                        <div className='card'>
-                                <div className='card-inner'>
-                                        <h3>الموظفين النشطين</h3>
-                                        <BsFillBellFill className='card_icon' />
-                                </div>
-                                <Typography sx={{ fontFamily: 'Cairo', color: 'white', fontSize: '30px' }}>120</Typography>
-                        </div>
-                        <div className='card'>
-                                <div className='card-inner'>
-                                        <h3>الموظفين النشطين</h3>
-                                        <BsFillBellFill className='card_icon' />
-                                </div>
-                                <Typography sx={{ fontFamily: 'Cairo', color: 'white', fontSize: '30px' }}>120</Typography>
-                        </div>
-                        <div className='card'>
-                                <div className='card-inner'>
-                                        <h3>الموظفين النشطين</h3>
-                                        <BsFillBellFill className='card_icon' />
-                                </div>
-                                <Typography sx={{ fontFamily: 'Cairo', color: 'white', fontSize: '30px' }}>120</Typography>
-                        </div>
-                </div>
+                <Box
+                        sx={{
+                                display: 'flex',
+                                backgroundColor: '#1976D2',
+                                justifyContent: 'space-between',
+                                borderRadius: '10px',
+                                alignItems: 'stretch',
+                                margin: '10px 10px',
+                        }}
+                >
+                        <Box sx={{ display: 'flex', p: 3 }}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', pr: 2, pl: 2 }}>
+                                        <Folder className="card_icon" />
+                                        <Typography sx={{ fontFamily: 'Cairo', pr: 1 }}>{title}</Typography>
+                                </Box>
+                        </Box>
+                        <IconButton>
+                                <DragIndicator sx={{ color: 'white' }} />
+                        </IconButton>
+                </Box>
         );
 };
 
