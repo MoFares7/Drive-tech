@@ -42,27 +42,28 @@ const Sidebar = ({ children }) => {
 
                                         </div>
                                         {isOpen &&
-                                                <Box sx={{
-                                                        backgroundColor: '#1976D2',
-                                                        color: 'white',
-                                                        justifyContent: 'center',
-                                                        textAlign: 'center',
-                                                        width: '100px',
-                                                        display: 'flex',
-                                                        borderRadius: '10px',
-                                                        m: 2,
-                                                        p: 1
-
-                                                }}>
-                                                        <IconButton >
-                                                                <BsPlusCircleFill sx={{ backgroundColor: 'white', color: 'red', }} />
-                                                        </IconButton>
-                                                        <Button sx={{
-                                                                color: 'white',
-                                                                fontFamily: 'Cairo',
-                                                                fontSize: '18px',
-                                                                alignContent: 'center'
-                                                        }}>إضافة
+                                                <Box sx={{ justifyContent: 'space-between' }}>
+                                                        <Button
+                                                                sx={{
+                                                                        backgroundColor: '#1976D2',
+                                                                        color: 'white',
+                                                                        justifyContent: 'center',
+                                                                        textAlign: 'center',
+                                                                        width: '100px',
+                                                                        display: 'flex',
+                                                                        borderRadius: '10px',
+                                                                        fontSize: '18px',
+                                                                        fontFamily: 'Cairo',
+                                                                        m: 2,
+                                                                        p: 2,
+                                                                        '&:hover': {
+                                                                                backgroundColor: '#535bf2',
+                                                                        },
+                                                                }}
+                                                                variant="contained"
+                                                                // startIcon={<BsPlusCircleFill sx={{ backgroundColor: 'white', color: 'red', marginLeft: 3 }} />}
+                                                        >
+                                                                إضافة
                                                         </Button>
                                                 </Box>
                                         }

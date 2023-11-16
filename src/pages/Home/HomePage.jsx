@@ -20,7 +20,9 @@ const HomePage = () => {
                                         <StatisticsCard title="المجموعة الأولى" />
                                         <StatisticsCard title="المجموعة الثانية" />
                                         <StatisticsCard title="المجموعة الثالثة" />
-                                      
+                                        <StatisticsCard title="المجموعة الرابعة" />
+                                        <StatisticsCard title="المجموعة الخامسة" />
+
                                 </Box>
                         </main >
                 </Box >
