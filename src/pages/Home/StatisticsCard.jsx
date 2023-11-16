@@ -1,11 +1,11 @@
 import React from 'react';
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, Button, IconButton, Typography } from '@mui/material';
 import { DragIndicator, Folder } from '@mui/icons-material';
 import '../../App.css';
 
 const StatisticsCard = ({ title }) => {
         return (
-                <Box
+                <Button
                         sx={{
                                 display: 'flex',
                                 backgroundColor: '#1976D2',
@@ -13,6 +13,7 @@ const StatisticsCard = ({ title }) => {
                                 borderRadius: '10px',
                                 alignItems: 'stretch',
                                 margin: '10px 10px',
+                                color: 'white'
                         }}
                 >
                         <Box sx={{ display: 'flex', p: 3 }}>
@@ -24,7 +25,7 @@ const StatisticsCard = ({ title }) => {
                         <IconButton>
                                 <DragIndicator sx={{ color: 'white' }} />
                         </IconButton>
-                </Box>
+                </Button>
         );
 };
 
