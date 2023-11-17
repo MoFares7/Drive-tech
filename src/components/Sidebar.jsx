@@ -20,8 +20,6 @@ const Sidebar = ({ children }) => {
         };
 
         const handleMainMenuItemClick = (path) => {
-                // You can add any additional logic here before navigating
-                // For now, let's just navigate to the specified path
                 navigate(path);
         };
 
@@ -35,25 +33,31 @@ const Sidebar = ({ children }) => {
                 {
                         name: ("المجموعات"),
                         icon: <GiteOutlined />,
+
                         onClick: handleNestedOptionsClick,
                         children: [
                                 {
+                                        path: "/my-group",
+                                        name: (" مجموعاتي الشخصية"),
+                                        onClick: () => handleMainMenuItemClick("/my-group"),
+                                },
+                                {
                                         path: "/public",
-                                        name: ("إدارة المجموعات العامة"),
+                                        name: (" المجموعات العامة"),
                                         onClick: () => handleMainMenuItemClick("/public"),
                                 },
                                 {
                                         path: "/privet",
-                                        name: ("إدارة المجموعات الخاصة"),
+                                        name: (" المجموعات الخاصة"),
                                         onClick: () => handleMainMenuItemClick("/privet"),
                                 },
                         ],
                 },
                 {
-                        path: "/logut",
+                        path: "/files",
                         name: ('تسجيل الخروج'),
                         icon: <Logout />,
-                        onClick: () => handleMainMenuItemClick("/logout"),
+                        onClick: () => handleMainMenuItemClick("/files"),
                 },
         ];
 
