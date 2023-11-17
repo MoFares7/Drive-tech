@@ -8,8 +8,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import MainButton from './MainButton';
 import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
@@ -18,7 +16,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function DialogForm({ titleButton, headerTitle, subHeaderTitle, onClick }) {
         const [open, setOpen] = React.useState(false);
         const [textFieldValue, setTextFieldValue] = React.useState('');
-        const [dropdownValue, setDropdownValue] = React.useState('private');
+        const [textFieldError, setTextFieldError] = React.useState('');
 
         const handleClickOpen = () => {
                 setOpen(true);
@@ -29,7 +27,25 @@ export default function DialogForm({ titleButton, headerTitle, subHeaderTitle, o
         };
 
         const handleTextFieldChange = (event) => {
-                setTextFieldValue(event.target.value);
+                const value = event.target.value;
+                setTextFieldValue(value);
+
+                // Validation: Check if the value is empty and set error accordingly
+                if (value.trim() === '') {
+                        setTextFieldError('الحقل مطلوب');
+                } else {
+                        setTextFieldError('');
+                }
+        };
+
+        const handleCreateClick = () => {
+                // Validation: Check if the value is empty before closing the dialog
+                if (textFieldValue.trim() === '') {
+                        setTextFieldError('الحقل مطلوب');
+                } else {
+                        // Perform other actions or close the dialog
+                        setOpen(false);
+                }
         };
 
         return (
@@ -42,24 +58,66 @@ export default function DialogForm({ titleButton, headerTitle, subHeaderTitle, o
                                 onClose={handleClose}
                                 aria-describedby="alert-dialog-slide-description"
                         >
-                                <DialogTitle>{headerTitle}</DialogTitle>
+                                <DialogTitle sx={{ fontFamily: 'Cairo' }}>{headerTitle}</DialogTitle>
+
                                 <DialogContent>
-                                        <DialogContentText id="alert-dialog-slide-description">{subHeaderTitle}</DialogContentText>
+                                         <DialogContentText id="alert-dialog-slide-description" sx={{ fontFamily: 'Cairo' }}>{subHeaderTitle}</DialogContentText>
 
                                         <TextField
-                                                label="Enter text"
+                                                label="اسم المجموعة"
                                                 value={textFieldValue}
                                                 onChange={handleTextFieldChange}
                                                 fullWidth
                                                 margin="normal"
                                                 variant="outlined"
                                                 required
-
+                                                error={Boolean(textFieldError)}
+                                                helperText={textFieldError}
+                                                InputLabelProps={{
+                                                        style: {
+                                                                fontFamily: 'Cairo',
+                                                                textAlign: 'right',
+                                                        },
+                                                }}
+                                                InputProps={{
+                                                        sx: {
+                                                                fontFamily: 'Cairo',
+                                                                borderTopRightRadius: 4,
+                                                                borderBottomRightRadius: 4,
+                                                                borderColor: textFieldError ? 'red' : undefined,
+                                                        },
+                                                }}
                                         />
                                 </DialogContent>
                                 <DialogActions>
-                                        <Button onClick={handleClose}>تراجع</Button>
-                                        <Button onClick={handleClose}>إنشاء</Button>
+                                        <Button
+                                                sx={{
+                                                        fontFamily: 'Cairo',
+                                                        color: 'red',
+                                                        '&:hover': {
+                                                                backgroundColor: '#F44336',
+                                                                color: 'white',
+                                                                pl:1
+                                                        },
+                                                }}
+                                                onClick={handleClose}
+                                        >
+                                                تراجع
+                                        </Button>
+                                        <Button
+                                                sx={{
+                                                        backgroundColor: '#272356',
+                                                        color: 'white',
+                                                        fontFamily: 'Cairo',
+                                                        '&:hover': {
+                                                                backgroundColor: '#303F9F',
+                                                        },
+                                                }}
+
+                                                onClick={handleCreateClick}
+                                        >
+                                                إنشاء
+                                        </Button>
                                 </DialogActions>
                         </Dialog>
                 </React.Fragment>

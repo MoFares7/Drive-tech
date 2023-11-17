@@ -16,7 +16,8 @@ const PublicGroupPage = () => {
                                 </Box>
                                 <DialogForm
                                         titleButton="إضافة مجموعة عامة "
-                                        headerTitle="الرجاء قم بإدخال اسم المجموعة التي تريد إنشائها مع تحديد نوعها"
+                                        headerTitle="إنشاء مجموعة عامة"
+                                        subHeaderTitle="الرجاء قم بإدخال اسم المجموعة التي تريد إنشائها   "
                                 />
                         </main >
                 </Box >

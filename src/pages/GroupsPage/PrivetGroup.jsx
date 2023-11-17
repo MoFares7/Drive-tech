@@ -2,6 +2,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 import StatisticsCard from '../HomePage/StatisticsCard';
 import MainButton from './../../components/MainButton';
+import DialogForm from './../../components/DialogForm';
 
 const PrivetGroupPage = () => {
   return (
@@ -12,8 +13,11 @@ const PrivetGroupPage = () => {
           <StatisticsCard title="المجموعة الثالثة" backgroundColor='#607D8B' />
           <StatisticsCard title="المجموعة الخامسة" backgroundColor='#607D8B' />
         </Box>
-        <MainButton width="200px" color="#3F51B5" title="إضافة مجموعة خاصة" />
-
+        <DialogForm
+          titleButton="إضافة مجموعة خاصة "
+          headerTitle="إنشاء مجموعة خاصة"
+          subHeaderTitle="الرجاء قم بإدخال اسم المجموعة التي تريد إنشائها   "
+        />
       </main >
     </Box >
   )
