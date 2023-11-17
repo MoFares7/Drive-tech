@@ -24,7 +24,7 @@ const StatisticsCard = ({ title, backgroundColor, type }) => {
         };
 
         const handleStatisticsCardClick = () => {
-                // Navigate to the "/files" route when the StatisticsCard is clicked
+
                 navigate('/files');
         };
 
@@ -40,7 +40,7 @@ const StatisticsCard = ({ title, backgroundColor, type }) => {
                                         color: 'white',
                                         position: 'relative',
                                 }}
-                                onClick={handleStatisticsCardClick} 
+                                onClick={handleStatisticsCardClick}
                         >
                                 {type === 'خاص' && (
                                         <Box
@@ -92,7 +92,7 @@ const StatisticsCard = ({ title, backgroundColor, type }) => {
                                         horizontal: 'right',
                                 }}
                         >
-                                <MenuItem sx={{fontFamily: 'Cairo'}} onClick={() => handleOptionClick('  ضمن المجموعة')}>
+                                <MenuItem sx={{ fontFamily: 'Cairo' }} onClick={() => handleOptionClick('  ضمن المجموعة')}>
                                         <ListItemIcon>
                                                 <Edit />
                                         </ListItemIcon>

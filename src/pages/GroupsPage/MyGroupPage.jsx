@@ -7,9 +7,9 @@ import { NavLink, useNavigate } from 'react-router-dom'; // Import useNavigate
 const MyGroupPage = () => {
         const navigate = useNavigate();
 
-        const handleStatisticsCardClick = (path) => {
-                navigate(path);
-        };
+        // const handleStatisticsCardClick = (path) => {
+        //         navigate(path);
+        // };
 
         return (
                 <Box sx={{ display: 'block' }}>
@@ -19,12 +19,12 @@ const MyGroupPage = () => {
                                         <StatisticsCard
                                                 title="المجموعة الأولى"
                                                 backgroundColor='#607D8B'
-                                                onClick={handleStatisticsCardClick("/files")}
+                                                // onClick={handleStatisticsCardClick("/files")}
                                         />
                                         <StatisticsCard
                                                 title="المجموعة الخامسة"
                                                 backgroundColor='#607D8B'
-                                                onClick={handleStatisticsCardClick("/files")}
+                                                // onClick={handleStatisticsCardClick("/files")}
                                         />
                                 </Box>
                         </main>

@@ -11,30 +11,34 @@ import { red } from '@mui/material/colors';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import fileLogo from '../assets/images/pdf.png';
 
-export default function FileCard({ onClose }) {
-  return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardHeader
-        avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">F</Avatar>}
-        action={
-          <IconButton aria-label="settings" onClick={onClose}>
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Mohamad Fares Al-Dabbas"
-        subheader="Nov 17, 2023"
-      />
-      <CardMedia
-        component="img"
-        height="194"
-        image={fileLogo}
-        alt="Paella dish"
-      />
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          محاضرة تطبيقات الانترنت
-        </Typography>
-      </CardContent>
-    </Card>
-  );
+export default function FileCard({ onClose, fileTitle, pusherName, pusherDate }) {
+        return (
+                <Card sx={{ maxWidth: 345, p: 1, m: 2, fontFamily: 'Cairo' }}>
+                        <CardHeader
+                                sx={{ fontFamily: 'Cairo' }}
+                                avatar={<Avatar sx={{ bgcolor: red[500], m: 1, }} aria-label="recipe">F</Avatar>}
+                                action={
+                                        <IconButton aria-label="settings" onClick={onClose}>
+                                                <MoreVertIcon />
+                                        </IconButton>
+                                }
+                                title={pusherName}
+                                subheader={pusherDate}
+                        />
+                        <CardMedia
+                                component="img"
+                                height="194"
+                                image={fileLogo}
+                                alt="Paella dish"
+
+                        />
+                        <CardContent>
+                                <Typography variant="body2" color="text.secondary" sx={{
+                                        fontFamily: 'Cairo'
+                                }}>
+                                        {fileTitle}
+                                </Typography>
+                        </CardContent>
+                </Card>
+        );
 }
