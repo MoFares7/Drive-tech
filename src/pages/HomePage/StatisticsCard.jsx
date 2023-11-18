@@ -6,12 +6,14 @@ import { useNavigate } from 'react-router-dom';
 const StatisticsCard = ({ title, backgroundColor, type }) => {
         const [isPopoverOpen, setIsPopoverOpen] = useState(false);
         const [anchorEl, setAnchorEl] = useState(null);
-        const navigate = useNavigate(); // Import useNavigate from react-router-dom
+        const navigate = useNavigate(); 
 
         const handleIconClick = (event) => {
+                event.stopPropagation(); 
                 setAnchorEl(event.currentTarget);
                 setIsPopoverOpen(true);
         };
+
 
         const handleClosePopover = () => {
                 setIsPopoverOpen(false);

@@ -10,13 +10,14 @@ const PublicGroupPage = () => {
         return (
                 <Box sx={{
                         flexDirection: 'column',
-                        alignItems: 'center',  // Center horizontally
+                        alignItems: 'center',
                         minHeight: '100vh',
                 }}>
                         <Header />
                         <Box sx={{
                                 pt: 4,
-                                py: 2,
+                                pr: 2,
+                                pl: 2,
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 justifyItems: 'center',
@@ -27,11 +28,13 @@ const PublicGroupPage = () => {
                                 <SearchHeader placeholder="ابحث ضمن المجموعات العامة" />
                         </Box>
                         <Box sx={{
+                                pr: 2,
+                                pl: 2,
                                 display: 'flex',
                                 flexWrap: 'wrap',
                                 alignItems: 'center',
-                                pr: 2,
-                                pl: 2,
+                                justifyContent: 'center',
+                                justifyItems: 'center',
                                 m: 1,
                                 pt: 2,
                                 width: '100%',

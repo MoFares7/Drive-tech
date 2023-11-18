@@ -15,13 +15,14 @@ const MyGroupPage = () => {
         return (
                 <Box sx={{
                         flexDirection: 'column',
-                        alignItems: 'center',  // Center horizontally
+                        alignItems: 'center',  
                         minHeight: '100vh',
                 }}>
                         <Header />
                         <Box sx={{
                                 pt:4,
-                                py: 2,
+                                pr: 2,
+                                pl: 2,
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 justifyItems: 'center',
