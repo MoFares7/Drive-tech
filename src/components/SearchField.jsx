@@ -7,10 +7,10 @@ export default function SearchField({ placeholder }) {
                 <Box
                         sx={{
                                 width: {
-                                        xs: 300,
-                                        sm: 350,
-                                        md: 400,
-                                        lg: 500
+                                        xs: 200,
+                                        sm: 650,
+                                        md: 800,
+                                        lg: 1100
                                 },
                                 maxWidth: '100%',
                                 height: '60px',
@@ -21,6 +21,7 @@ export default function SearchField({ placeholder }) {
                         }}
                 >
                         <TextField
+                                
                                 fullWidth
                                 label={placeholder}
                                 id="fullWidth"

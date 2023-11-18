@@ -3,7 +3,7 @@ import { Box, Button } from '@mui/material';
 import SearchField from './SearchField';
 import SearchIcon from '@mui/icons-material/Search';
 
-const SearchHeader = ({onRefresh, onSearch}) => {
+const SearchHeader = ({ placeholder, onRefresh, onSearch }) => {
         return (
                 <Box
                         sx={{
@@ -13,6 +13,7 @@ const SearchHeader = ({onRefresh, onSearch}) => {
                                         md: 'flex',
                                         lg: 'flex',
                                 },
+
                         }}
                 >
                         <Button
@@ -32,7 +33,7 @@ const SearchHeader = ({onRefresh, onSearch}) => {
                         >
                                 ابحث
                         </Button>
-                        <SearchField placeholder="البحث عن قسم ما" />
+                        <SearchField placeholder={placeholder} />
                         <Button
                                 onClick={onRefresh}
                                 sx={{
