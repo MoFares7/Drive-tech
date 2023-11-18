@@ -15,8 +15,8 @@ const HomePage = () => {
                 }}>
                         <Header />
                         <Box sx={{
-                                pr: 2,
-                                pl: 2,
+                                pt: 4,
+                                py: 2,
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 justifyItems: 'center',
