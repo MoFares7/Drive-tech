@@ -21,6 +21,7 @@ export default function DialogFile({ titleButton, headerTitle, subHeaderTitle, o
         const [textFieldValue, setTextFieldValue] = useState('');
         const [textFieldError, setTextFieldError] = useState('');
         const [selectedFile, setSelectedFile] = useState(null);
+        const [selectedUsers, setSelectedUsers] = useState([]);
         const fileInputRef = useRef(null);
 
         const handleClickOpen = () => {
@@ -31,6 +32,7 @@ export default function DialogFile({ titleButton, headerTitle, subHeaderTitle, o
                 setOpen(false);
                 setTextFieldValue('');
                 setTextFieldError('');
+                setSelectedUsers([]);
         };
 
         const handleTextFieldChange = (event) => {
@@ -64,6 +66,7 @@ export default function DialogFile({ titleButton, headerTitle, subHeaderTitle, o
                         console.log('Text Field Value:', textFieldValue);
                         setTextFieldValue('');
                         setTextFieldError('');
+                        setSelectedUsers([]);
                 }
         };
 

@@ -57,8 +57,13 @@ export default function MultipleSelectUser() {
 
         return (
                 <div>
-                        <FormControl sx={{ m: 1, width: 300 }}>
-                                <InputLabel id="demo-multiple-chip-label">المستخدمين</InputLabel>
+                        <FormControl sx={{ m: 1, width: 540, fontFamily: 'Cairo' }}>
+                                <InputLabel
+                                        id="demo-multiple-chip-label"
+                                        sx={{ fontFamily: 'Cairo' }} // Add fontFamily to InputLabel
+                                >
+                                        المستخدمين
+                                </InputLabel>
                                 <Select
                                         labelId="demo-multiple-chip-label"
                                         id="demo-multiple-chip"
@@ -67,19 +72,23 @@ export default function MultipleSelectUser() {
                                         onChange={handleChange}
                                         input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                                         renderValue={(selected) => (
-                                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.2 }}>
                                                         {selected.map((value) => (
                                                                 <Chip key={value} label={value} />
                                                         ))}
                                                 </Box>
                                         )}
                                         MenuProps={MenuProps}
+                                        sx={{ fontFamily: 'Cairo' }}
                                 >
                                         {names.map((name) => (
                                                 <MenuItem
                                                         key={name}
                                                         value={name}
-                                                        style={getStyles(name, personName, theme)}
+                                                        style={{
+                                                                fontFamily: 'Cairo',
+
+                                                        }}
                                                 >
                                                         {name}
                                                 </MenuItem>
