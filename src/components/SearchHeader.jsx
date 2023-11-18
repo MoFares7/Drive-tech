@@ -13,6 +13,7 @@ const SearchHeader = ({ placeholder, onRefresh, onSearch }) => {
                                         md: 'flex',
                                         lg: 'flex',
                                 },
+
                         }}
                 >
                         <Button

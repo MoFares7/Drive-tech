@@ -4,24 +4,48 @@ import StatisticsCard from '../HomePage/StatisticsCard';
 import MainButton from './../../components/MainButton';
 import DialogForm from './../../components/DialogForm';
 import SearchHeader from '../../components/SearchHeader';
+import Header from '../HomePage/HeaderCard';
 
 const PrivetGroupPage = () => {
   return (
-    <Box sx={{ display: 'block' }}>
-      <main className="main-container">
+    <Box sx={{
+      flexDirection: 'column',
+      alignItems: 'center',  // Center horizontally
+      minHeight: '100vh',
+    }}>
+      <Header />
+      <Box sx={{
+        pr: 2,
+        pl: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        justifyItems: 'center',
+        flexDirection: 'column',
+        width: '100%',
+        textAlign: 'center',
+      }}>
         <SearchHeader placeholder="ابحث ضمن المجموعات الخاصة" />
+      </Box>
+      <Box sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        pr: 2,
+        pl: 2,
+        m: 1,
+        pt: 2,
+        width: '100%',
+      }}>
+        <StatisticsCard title="المجموعة الثانية" backgroundColor='#607D8B' />
+        <StatisticsCard title="المجموعة الثالثة" backgroundColor='#607D8B' />
+        <StatisticsCard title="المجموعة الخامسة" backgroundColor='#607D8B' />
+      </Box>
+      <DialogForm
+        titleButton="إضافة مجموعة خاصة "
+        headerTitle="إنشاء مجموعة خاصة"
+        subHeaderTitle="الرجاء قم بإدخال اسم المجموعة التي تريد إنشائها   "
+      />
 
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', p: 1, m: 1 }}>
-          <StatisticsCard title="المجموعة الثانية" backgroundColor='#607D8B' />
-          <StatisticsCard title="المجموعة الثالثة" backgroundColor='#607D8B' />
-          <StatisticsCard title="المجموعة الخامسة" backgroundColor='#607D8B' />
-        </Box>
-        <DialogForm
-          titleButton="إضافة مجموعة خاصة "
-          headerTitle="إنشاء مجموعة خاصة"
-          subHeaderTitle="الرجاء قم بإدخال اسم المجموعة التي تريد إنشائها   "
-        />
-      </main >
     </Box >
   )
 }

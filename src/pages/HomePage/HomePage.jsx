@@ -7,21 +7,43 @@ import SearchHeader from '../../components/SearchHeader';
 const HomePage = () => {
 
         return (
-                <Box sx={{ display: 'block', }}>
+                <Box sx={{
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        minHeight: '100vh',
+
+                }}>
                         <Header />
-                       
-
-                        <main className="main-container">
+                        <Box sx={{
+                                pr: 2,
+                                pl: 2,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                justifyItems: 'center',
+                                flexDirection: 'column',
+                                width: '100%',
+                                textAlign: 'center',
+                        }}>
                                 <SearchHeader placeholder="ابحث عن مجموعة " />
-                                <Box sx={{ display: 'flex', flexWrap: 'wrap', p: 1, m: 1 }}>
-                                        <StatisticsCard title="المجموعة الأولى" backgroundColor='#1976D2' />
-                                        <StatisticsCard title="المجموعة الثانية" backgroundColor='#1976D2' type="خاص" />
-                                        <StatisticsCard title="المجموعة الثالثة" backgroundColor='#1976D2' type="خاص" />
-                                        <StatisticsCard title="المجموعة الرابعة" backgroundColor='#1976D2' />
-                                        <StatisticsCard title="المجموعة الخامسة" backgroundColor='#1976D2' type="خاص" />
+                        </Box>
+                        <Box>
 
-                                </Box>
-                        </main >
+                        </Box>
+                        <Box sx={{
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                                alignItems: 'center',
+                                m: 1,
+                                p: 2,
+                                width: '100%',
+                        }}>
+                                <StatisticsCard title="المجموعة الأولى" backgroundColor='#1976D2' />
+                                <StatisticsCard title="المجموعة الثانية" backgroundColor='#1976D2' type="خاص" />
+                                <StatisticsCard title="المجموعة الثالثة" backgroundColor='#1976D2' type="خاص" />
+                                <StatisticsCard title="المجموعة الرابعة" backgroundColor='#1976D2' />
+                                <StatisticsCard title="المجموعة الخامسة" backgroundColor='#1976D2' type="خاص" />
+                        </Box>
+
                 </Box >
         );
 };

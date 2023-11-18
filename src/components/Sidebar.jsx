@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, ListItem, ListItemText, List } from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, ListItem, ListItemText, List, Box } from '@mui/material';
 import { GiteOutlined, Home, Logout } from '@mui/icons-material';
 import { BsPlusCircleFill } from 'react-icons/bs';
 import { FaBars } from 'react-icons/fa';
@@ -101,7 +101,7 @@ const Sidebar = ({ children }) => {
                                         </div>
                                 </div>
                         </div>
-                        <main>{children}</main>
+                        <Box>{children}</Box>
                 </div>
         );
 };
