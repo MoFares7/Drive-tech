@@ -20,19 +20,22 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Routes>
-          {/* <Route path="/login" element={<LoginPage />} /> */}
-          <Route element={<SidebarLayout />}>
-            <Route index element={<HomePage />} />
-            <Route path="/my-group" element={<MyGroupPage />} />
-            <Route path="/public" element={<PublicGroupPage />} />
-            <Route path="/privet" element={<PrivetGroupPage />} />
-            <Route path="/setting" element={<SettingPage />} />
-            <Route path="/files" element={<FilesPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <div style={{ display: 'flex' ,width: '900px'}}>
+
+        <BrowserRouter>
+          <Routes>
+            {/* <Route path="/login" element={<LoginPage />} /> */}
+            <Route element={<SidebarLayout />}>
+              <Route index element={<HomePage />} />
+              <Route path="/my-group" element={<MyGroupPage />} />
+              <Route path="/public" element={<PublicGroupPage />} />
+              <Route path="/privet" element={<PrivetGroupPage />} />
+              <Route path="/setting" element={<SettingPage />} />
+              <Route path="/files" element={<FilesPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </div>
     </ThemeProvider>
   );
 }

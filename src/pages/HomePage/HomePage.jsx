@@ -24,6 +24,7 @@ const HomePage = () => {
                                 flexDirection: 'column',
                                 width: '100%',
                                 textAlign: 'center',
+                                display: 'flex',
                         }}>
                                 <SearchHeader placeholder="ابحث عن مجموعة " />
                         </Box>

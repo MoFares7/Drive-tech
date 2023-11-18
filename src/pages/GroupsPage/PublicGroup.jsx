@@ -24,6 +24,7 @@ const PublicGroupPage = () => {
                                 flexDirection: 'column',
                                 width: '100%',
                                 textAlign: 'center',
+                                display: 'flex',
                         }}>
                                 <SearchHeader placeholder="ابحث ضمن المجموعات العامة" />
                         </Box>
@@ -42,12 +43,18 @@ const PublicGroupPage = () => {
                                 <StatisticsCard title="المجموعة الأولى" backgroundColor='#607D8B' />
                                 <StatisticsCard title="المجموعة الرابعة" backgroundColor='#607D8B' />
                         </Box>
-                        <DialogForm
-                                titleButton="إضافة مجموعة عامة "
-                                headerTitle="إنشاء مجموعة عامة"
-                                subHeaderTitle="الرجاء قم بإدخال اسم المجموعة التي تريد إنشائها   "
-                        />
-
+                        <Box sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                justifyItems: 'center',
+                        }}>
+                                <DialogForm
+                                        titleButton="إضافة مجموعة عامة "
+                                        headerTitle="إنشاء مجموعة عامة"
+                                        subHeaderTitle="الرجاء قم بإدخال اسم المجموعة التي تريد إنشائها   "
+                                />
+                        </Box>
                 </Box >
         )
 }
