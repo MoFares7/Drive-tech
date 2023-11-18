@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import StatisticsCard from '../HomePage/StatisticsCard';
-import MainButton from './../../components/MainButton';
 import DialogForm from './../../components/DialogForm';
 import SearchHeader from '../../components/SearchHeader';
 import Header from '../HomePage/HeaderCard';
@@ -23,7 +22,7 @@ const PrivetGroupPage = () => {
         justifyItems: 'center',
         flexDirection: 'column',
         width: '100%',
-        textAlign: 'center',
+        textAlign: 'center', display: 'flex',
       }}>
         <SearchHeader placeholder="ابحث ضمن المجموعات الخاصة" />
       </Box>
@@ -43,12 +42,18 @@ const PrivetGroupPage = () => {
         <StatisticsCard title="المجموعة الثالثة" backgroundColor='#607D8B' />
         <StatisticsCard title="المجموعة الخامسة" backgroundColor='#607D8B' />
       </Box>
-      <DialogForm
-        titleButton="إضافة مجموعة خاصة "
-        headerTitle="إنشاء مجموعة خاصة"
-        subHeaderTitle="الرجاء قم بإدخال اسم المجموعة التي تريد إنشائها   "
-      />
-
+      <Box sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        justifyItems: 'center',
+      }}>
+        <DialogForm
+          titleButton="إضافة مجموعة خاصة "
+          headerTitle="إنشاء مجموعة خاصة"
+          subHeaderTitle="الرجاء قم بإدخال اسم المجموعة التي تريد إنشائها   "
+        />
+      </Box>
     </Box >
   )
 }

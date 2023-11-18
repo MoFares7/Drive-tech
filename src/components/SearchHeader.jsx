@@ -19,7 +19,7 @@ const SearchHeader = ({ placeholder, onRefresh, onSearch }) => {
                         <Button
                                 onClick={onSearch}
                                 sx={{
-                                        backgroundColor: '#2962ff',
+                                        backgroundColor: '#3F51B5',
                                         color: 'white',
                                         fontFamily: 'Cairo',
                                         mb: 0.4,

@@ -15,12 +15,12 @@ const MyGroupPage = () => {
         return (
                 <Box sx={{
                         flexDirection: 'column',
-                        alignItems: 'center',  
+                        alignItems: 'center',
                         minHeight: '100vh',
                 }}>
                         <Header />
                         <Box sx={{
-                                pt:4,
+                                pt: 4,
                                 pr: 2,
                                 pl: 2,
                                 alignItems: 'center',
@@ -28,7 +28,7 @@ const MyGroupPage = () => {
                                 justifyItems: 'center',
                                 flexDirection: 'column',
                                 width: '100%',
-                                textAlign: 'center',
+                                textAlign: 'center', display: 'flex',
                         }}>
                                 <SearchHeader placeholder="البحث ضمن مجموعاتي" />
                         </Box>
