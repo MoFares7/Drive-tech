@@ -11,7 +11,11 @@ const theme = createTheme({
     },
     h1: {
       fontFamily: 'Cairo, sans-serif',
-    }
+    },
+    typography: {
+      fontFamily: 'Cairo, sans-serif',
+      // You can also customize other typography settings here
+    },
   },
 });
 

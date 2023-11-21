@@ -10,8 +10,19 @@ const FilesPage = () => {
         return (
                 <Box sx={{ display: 'block', p: 2 }}>
                         <Header />
-                        <SearchHeader placeholder="ابحث عن ملف معين" />
-
+                        <Box sx={{
+                                pt: 4,
+                                pr: 2,
+                                pl: 2,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                justifyItems: 'center',
+                                flexDirection: 'column',
+                                width: '100%',
+                                textAlign: 'center', display: 'flex',
+                        }}>
+                                <SearchHeader placeholder="ابحث عن ملف معين" />
+                        </Box>
                         <Box sx={{ display: 'flex', flexWrap: 'wrap', p: 1, m: 1 }}>
 
                                 <FileCard
