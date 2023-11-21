@@ -12,6 +12,7 @@ const PublicGroupPage = () => {
                         flexDirection: 'column',
                         alignItems: 'center',
                         minHeight: '100vh',
+                    
                 }}>
                         <Header />
                         <Box sx={{

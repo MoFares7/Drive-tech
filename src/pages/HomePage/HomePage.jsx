@@ -8,9 +8,12 @@ const HomePage = () => {
 
         return (
                 <Box sx={{
+                        display: 'flex',
+                        overflow: 'hidden',
                         flexDirection: 'column',
-                        alignItems: 'center',
                         minHeight: '100vh',
+                        width: '90%',
+
 
                 }}>
                         <Header />
@@ -22,7 +25,7 @@ const HomePage = () => {
                                 justifyContent: 'center',
                                 justifyItems: 'center',
                                 flexDirection: 'column',
-                                width: '100%',
+                                width: '90%',
                                 textAlign: 'center',
                                 display: 'flex',
                         }}>
@@ -41,7 +44,7 @@ const HomePage = () => {
                                 justifyItems: 'center',
                                 m: 1,
                                 pt: 2,
-                                width: '100%',
+                                width: '90%',
                         }}>
                                 <StatisticsCard title="المجموعة الأولى" backgroundColor='#1976D2' />
                                 <StatisticsCard title="المجموعة الثانية" backgroundColor='#1976D2' type="خاص" />

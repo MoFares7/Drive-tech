@@ -43,10 +43,10 @@ export default function SignUpPage() {
                                         xs: 'block',
                                         sm: 'block',
                                         md: 'flex',
-
-                                }
+                                },
+                                width: '100%',
                         }}>
-                                <Grid container component="main" sx={{ height: '100vh', width: '1500px' }}>
+                                <Grid container component="main" sx={{ height: '100vh' }}>
                                         <CssBaseline />
 
                                         <Grid item xs={12} sm={8} md={5} elevation={6} square>

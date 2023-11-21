@@ -22,8 +22,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ display: 'flex', width: '900px' }}>
-
+      <div style={{ display: 'flex', width: '100%' }}>
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
