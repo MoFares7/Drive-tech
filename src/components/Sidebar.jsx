@@ -54,23 +54,23 @@ const Sidebar = ({ children }) => {
                         ],
                 },
                 {
-                        path: "/files",
+                        path: "/login",
                         name: ('تسجيل الخروج'),
                         icon: <Logout />,
-                        onClick: () => handleMainMenuItemClick("/files"),
+                        onClick: () => handleMainMenuItemClick("/login"),
                 },
         ];
 
         return (
                 <div>
                         <div className="container">
-                                <div style={{ width: isOpen ? "250px" : "70px" }} className="sidebar">
+                                <div style={{ width:  "250px"  }} className="sidebar">
                                         <div className="top_section">
-                                                <h1 style={{ display: isOpen ? "block" : "none" }} className="logo">
+                                                <h1 style={{ display:  "block"  }} className="logo">
                                                         {('Drive')}
                                                 </h1>
-                                                <div style={{ marginLeft: isOpen ? "50px" : "0px" }} className="bars">
-                                                        <FaBars onClick={toggle} />
+                                                <div style={{ marginLeft:  "50px"  }} className="bars">
+                                                        {/* <FaBars onClick={toggle} /> */}
                                                 </div>
                                         </div>
 
@@ -79,7 +79,7 @@ const Sidebar = ({ children }) => {
                                                         <div key={index}>
                                                                 <div className={`link ${showNestedOptions && item.name === ("المجموعات") ? '' : ''}`} onClick={item.onClick}>
                                                                         <div className="icon">{item.icon}</div>
-                                                                        <div style={{ display: isOpen ? "block" : "none" }} className="link_text">
+                                                                        <div style={{ display: "block" }} className="link_text">
                                                                                 {item.name}
                                                                         </div>
                                                                 </div>

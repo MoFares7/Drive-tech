@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React,{useState} from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -10,14 +10,6 @@ import Chip from '@mui/material/Chip';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-        PaperProps: {
-                style: {
-                        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-                        width: 250,
-                },
-        },
-};
 
 const names = [
         ' محمد فارس الدباس',
@@ -32,18 +24,9 @@ const names = [
 
 ];
 
-function getStyles(name, personName, theme) {
-        return {
-                fontWeight:
-                        personName.indexOf(name) === -1
-                                ? theme.typography.fontWeightRegular
-                                : theme.typography.fontWeightMedium,
-        };
-}
 
 export default function MultipleSelectUser() {
-        const theme = useTheme();
-        const [personName, setPersonName] = React.useState([]);
+        const [personName, setPersonName] = React.useState([]);;
 
         const handleChange = (event) => {
                 const {
@@ -56,11 +39,15 @@ export default function MultipleSelectUser() {
         };
 
         return (
-                <div>
-                        <FormControl sx={{ m: 1, width: 540, fontFamily: 'Cairo' }}>
+                <div>  
+                        <FormControl sx={{ direction: 'ltr', m: 1, width: 540, fontFamily: 'Cairo' }}>
                                 <InputLabel
                                         id="demo-multiple-chip-label"
-                                        sx={{ fontFamily: 'Cairo' }} // Add fontFamily to InputLabel
+                                        sx={{
+                                                width: '100%',
+                                                fontFamily: 'Cairo',
+                                                                                        paddingRight: 100
+                                        }}
                                 >
                                         المستخدمين
                                 </InputLabel>
@@ -70,7 +57,9 @@ export default function MultipleSelectUser() {
                                         multiple
                                         value={personName}
                                         onChange={handleChange}
-                                        input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                        input={<OutlinedInput id="select-multiple-chip" label="Chip" sx={{
+
+                                        }} />}
                                         renderValue={(selected) => (
                                                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.2 }}>
                                                         {selected.map((value) => (
@@ -78,8 +67,10 @@ export default function MultipleSelectUser() {
                                                         ))}
                                                 </Box>
                                         )}
-                                        MenuProps={MenuProps}
-                                        sx={{ fontFamily: 'Cairo' }}
+
+                                        sx={{
+                                                fontFamily: 'Cairo'
+                                        }}
                                 >
                                         {names.map((name) => (
                                                 <MenuItem

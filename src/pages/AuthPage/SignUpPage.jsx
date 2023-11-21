@@ -12,15 +12,14 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import loginLogo from '../../assets/images/login.jpg';
+import loginLogo from '../../assets/images/signUp.jpg';
 
 import { CircularProgress } from '@mui/material';
 
 
 const defaultTheme = createTheme();
 
-export default function LoginPage() {
-        // const dispatch = useDispatch();
+export default function SignUpPage() {
         const [fieldsName, setfieldsName] = useState('');
         const [fieldsNameError, setfieldsNameError] = useState(false);
         const [loading, setLoading] = useState(false);
@@ -66,7 +65,7 @@ export default function LoginPage() {
                                                         <Typography component="h1" variant="h5" sx={{
                                                                 fontFamily: 'Cairo',
                                                         }}>
-                                                                تسجيل الدخول
+                                                                إنشاء حساب في النظام
                                                         </Typography>
                                                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                                                                 <TextField
@@ -93,7 +92,30 @@ export default function LoginPage() {
                                                                                 },
                                                                         }}
                                                                 />
-                                                             
+                                                                <TextField
+                                                                        margin="normal"
+                                                                        required
+                                                                        fullWidth
+                                                                        id="username"
+                                                                        label="البريد الالكتروني "
+                                                                        name="username"
+                                                                        autoFocus
+                                                                        error={fieldsNameError}
+                                                                        helperText={fieldsNameError ? ' الحقل مطلوب' : ''}
+                                                                        onChange={(e) => {
+                                                                                setfieldsName(e.target.value);
+                                                                                if (e.target.value.trim() !== '') {
+                                                                                        setfieldsNameError(false);
+                                                                                }
+                                                                        }}
+                                                                        InputLabelProps={{
+                                                                                style: {
+                                                                                        fontFamily: 'Cairo',
+                                                                                        fontSize: '12px',
+
+                                                                                },
+                                                                        }}
+                                                                />
                                                                 <TextField
                                                                         margin="normal"
                                                                         required
@@ -135,13 +157,13 @@ export default function LoginPage() {
                                                                                         },
                                                                                 }}
                                                                         >
-                                                                                تسجيل الدخول
-                                                                        </Button>
+                                                                                إنشاء حساب
+                                                                                </Button>
                                                                 )}
                                                                 <Grid container justifyContent="center">
                                                                         <Grid item>
                                                                                 <Link
-                                                                                        href="/signUp"
+                                                                                        href="/login"
                                                                                         variant="body2"
                                                                                         color="#1d2634"
                                                                                         sx={{
@@ -151,7 +173,7 @@ export default function LoginPage() {
                                                                                                 fontFamily: 'Cairo'
                                                                                         }}
                                                                                 >
-                                                                                        {"ليس لديل حساب ؟ إنشاء حساب"}
+                                                                                        {" لديل حساب سابق ؟ تسجيل الدخول"}
                                                                                 </Link>
                                                                         </Grid>
                                                                 </Grid>

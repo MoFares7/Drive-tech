@@ -10,7 +10,8 @@ import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import MainButton from './MainButton';
-import MultipleSelectUser from './MultipleSelectUser';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
@@ -81,44 +82,62 @@ export default function DialogFile({ titleButton, headerTitle, subHeaderTitle, o
                                                 {subHeaderTitle}
                                         </DialogContentText>
 
-                                        <TextField
-                                                label="الملف "
-                                                value={textFieldValue}
-                                                onChange={handleTextFieldChange}
-                                                fullWidth
-                                                margin="normal"
-                                                variant="outlined"
-                                                required
-                                                disabled
-                                                error={Boolean(textFieldError)}
-                                                helperText={textFieldError}
-                                                InputLabelProps={{
-                                                        style: {
-                                                                fontFamily: 'Cairo',
-                                                                textAlign: 'right',
-                                                        },
-                                                }}
-                                                InputProps={{
-                                                        sx: {
-                                                                fontFamily: 'Cairo',
-                                                                borderTopRightRadius: 4,
-                                                                borderBottomRightRadius: 4,
-                                                                borderColor: textFieldError ? 'red' : undefined,
-                                                        },
-                                                }}
-                                        />
+                                        <FormControl fullWidth sx={{}}>
+                                                <TextField
+                                                        id="file-input"
+                                                        fullWidth
+                                                        margin="normal"
+                                                        variant="outlined"
+                                                        value={selectedFile}
+                                                        onChange={handleTextFieldChange}
+                                                        required
+                                                        disabled
+                                                        error={Boolean(textFieldError)}
+                                                        helperText={textFieldError}
+                                                        InputProps={{
+                                                                endAdornment: (
+                                                                        <div style={{ display: 'flex' }}>
+                                                                                <InputLabel
+                                                                                        htmlFor="file-input"
+                                                                                        sx={{
+                                                                                                width: '100%',
+                                                                                                fontFamily: 'Cairo',
+                                                                                                textAlign: ' left',
+                                                                                                ml: 3, alignItems: 'center'
+                                                                                        }}
+                                                                                >
 
-                                        <input
-                                                type="file"
-                                                onChange={handleFileChange}
-                                                accept=".pdf,.doc,.docx"
-                                                ref={fileInputRef}
-                                                style={{ display: 'none' }}
-                                        />
-                                        <IconButton color="primary" component="span" onClick={() => fileInputRef.current.click()}>
-                                                <CloudUploadIcon />
-                                        </IconButton>
-                                        <MultipleSelectUser />
+                                                                                        الملف
+                                                                                </InputLabel>
+                                                                                <IconButton
+                                                                                        color="primary"
+                                                                                        component="span"
+                                                                                        onClick={() => fileInputRef.current.click()}
+                                                                                        edge="end"
+                                                                                >
+                                                                                        <CloudUploadIcon />
+                                                                                </IconButton>
+                                                                        </div>
+
+                                                                ),
+                                                                sx: {
+                                                                        fontFamily: 'Cairo',
+                                                                        borderTopRightRadius: 4,
+                                                                        borderBottomRightRadius: 4,
+                                                                        borderColor: textFieldError ? 'red' : undefined,
+                                                                },
+                                                        }}
+                                                />
+
+                                                <input
+                                                        type="file"
+                                                        onChange={handleFileChange}
+                                                        accept=".pdf,.doc,.docx"
+                                                        ref={fileInputRef}
+                                                        style={{ display: 'none' }}
+                                                />
+                                        </FormControl>
+
                                 </DialogContent>
                                 <DialogActions>
                                         <Button
