@@ -13,6 +13,13 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import MultipleSelectUser from './MultipleSelectUser';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import CircularProgress from '@mui/material/CircularProgress';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import { useDispatch } from 'react-redux';
+import { addGroups, addGroupsStart, addGroupsSuccess, addGroupsFailure } from '../services/Group/addGroupSlice';
+import axios from 'axios';
+import { getGroupsAboutType } from '../services/Group/getGroupsAboutTypeSlice';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
@@ -21,9 +28,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function DialogForm({ titleButton, headerTitle, subHeaderTitle, onClick }) {
         const [open, setOpen] = React.useState(false);
         const [textFieldValue, setTextFieldValue] = React.useState('');
+        const [emailFieldValue, setEmailFieldValue] = React.useState('');
         const [textFieldError, setTextFieldError] = React.useState('');
         const [selectedFile, setSelectedFile] = useState(null);
+        const [loading, setLoading] = useState(false);
+        const [snackbarOpen, setSnackbarOpen] = useState(false);
+        const [snackbarMessage, setSnackbarMessage] = useState('');
         const fileInputRef = useRef(null);
+        const dispatch = useDispatch();
 
         const handleClickOpen = () => {
                 setOpen(true);
@@ -31,12 +43,15 @@ export default function DialogForm({ titleButton, headerTitle, subHeaderTitle, o
 
         const handleClose = () => {
                 setOpen(false);
+                setTextFieldValue('');
+                setEmailFieldValue('');
+                setTextFieldError('');
+                setSelectedFile(null);
         };
 
         const handleTextFieldChange = (event) => {
                 const value = event.target.value;
                 setTextFieldValue(value);
-
 
                 if (value.trim() === '') {
                         setTextFieldError('الحقل مطلوب');
@@ -46,19 +61,60 @@ export default function DialogForm({ titleButton, headerTitle, subHeaderTitle, o
         };
 
         const handleFileChange = (event) => {
-                const file = event.target.files[0];
-                setSelectedFile(file);
-                setSelectedFile(file ? file.name : '');
+                setSelectedFile(event.target.files[0]);
         };
 
-        const handleCreateClick = () => {
+        const handleEmailChange = (event) => {
+                const value = event.target.value;
+                setEmailFieldValue(value);
+        }
+
+        const handleCreateClick = async (event) => {
+                event.preventDefault();
+
                 if (textFieldValue.trim() === '' && (!selectedFile || selectedFile.trim() === '')) {
                         setTextFieldError('الحقل مطلوب');
                 } else {
-                        setOpen(false);
+                        setLoading(true);
+
+                        const formData = new FormData();
+                        formData.append("name", textFieldValue);
+                        formData.append("type", 'public');
+                        formData.append("filename", 'aaaa');
+                        formData.append("link", selectedFile);
+                        formData.append("email", emailFieldValue);
+
+                        try {
+                                const response = await axios({
+                                        method: "post",
+                                        url: "http://127.0.0.1:8000/api/group/adding",
+                                        data: formData,
+                                        headers: {
+                                                "Content-Type": "multipart/form-data",
+                                                "Authorization": `Bearer ${localStorage.getItem('token')}`,
+                                        },
+                                });
+
+                                dispatch(addGroupsSuccess());
+                                dispatch(getGroupsAboutType('public'));
+                                setOpen(false);
+                                setLoading(false);
+                                setTextFieldValue('');
+                                setEmailFieldValue('');
+                                setTextFieldError('');
+                                setSelectedFile(null);
+                        } catch (error) {
+                                dispatch(addGroupsFailure(error));
+                                setLoading(false);
+                                setSnackbarMessage('Error creating group. Please try again.');
+                                setSnackbarOpen(true);
+                        }
                 }
         };
 
+        const handleSnackbarClose = () => {
+                setSnackbarOpen(false);
+        };
 
         return (
                 <React.Fragment>
@@ -87,9 +143,7 @@ export default function DialogForm({ titleButton, headerTitle, subHeaderTitle, o
                                                 helperText={textFieldError}
                                                 InputLabelProps={{
                                                         style: {
-                                                                // width: '100%',
                                                                 fontFamily: 'Cairo',
-                                                                // textAlign: 'right',
                                                         },
                                                 }}
                                                 InputProps={{
@@ -108,8 +162,8 @@ export default function DialogForm({ titleButton, headerTitle, subHeaderTitle, o
                                                         fullWidth
                                                         margin="normal"
                                                         variant="outlined"
-                                                        value={selectedFile}
-                                                        onChange={handleTextFieldChange}
+                                                        value={selectedFile ? selectedFile.name : ''}
+                                                        onChange={handleFileChange}
                                                         required
                                                         disabled
                                                         error={Boolean(textFieldError)}
@@ -122,11 +176,11 @@ export default function DialogForm({ titleButton, headerTitle, subHeaderTitle, o
                                                                                         sx={{
                                                                                                 width: '100%',
                                                                                                 fontFamily: 'Cairo',
-                                                                                                textAlign: ' left',
-                                                                                                ml: 3, alignItems: 'center'
+                                                                                                textAlign: 'left',
+                                                                                                ml: 3,
+                                                                                                alignItems: 'center',
                                                                                         }}
                                                                                 >
-
                                                                                         الملف
                                                                                 </InputLabel>
                                                                                 <IconButton
@@ -138,7 +192,6 @@ export default function DialogForm({ titleButton, headerTitle, subHeaderTitle, o
                                                                                         <CloudUploadIcon />
                                                                                 </IconButton>
                                                                         </div>
-
                                                                 ),
                                                                 sx: {
                                                                         fontFamily: 'Cairo',
@@ -148,7 +201,6 @@ export default function DialogForm({ titleButton, headerTitle, subHeaderTitle, o
                                                                 },
                                                         }}
                                                 />
-
                                                 <input
                                                         type="file"
                                                         onChange={handleFileChange}
@@ -156,9 +208,32 @@ export default function DialogForm({ titleButton, headerTitle, subHeaderTitle, o
                                                         ref={fileInputRef}
                                                         style={{ display: 'none' }}
                                                 />
-                                        </FormControl>
 
-                                        <MultipleSelectUser />
+                                        </FormControl>
+                                        <TextField
+                                                label="البريد الالكتروني للمستخدم"
+                                                value={emailFieldValue}
+                                                onChange={handleEmailChange}
+                                                fullWidth
+                                                margin="normal"
+                                                variant="outlined"
+                                                required
+                                                //  helperText={textFieldError}
+                                                InputLabelProps={{
+                                                        style: {
+                                                                fontFamily: 'Cairo',
+                                                        },
+                                                }}
+                                                InputProps={{
+                                                        sx: {
+                                                                fontFamily: 'Cairo',
+                                                                borderTopRightRadius: 4,
+                                                                borderBottomRightRadius: 4,
+                                                                borderColor: textFieldError ? 'red' : undefined,
+                                                        },
+                                                }}
+                                        />
+                                        {/* <MultipleSelectUser /> */}
                                 </DialogContent>
                                 <DialogActions>
                                         <Button
@@ -168,7 +243,7 @@ export default function DialogForm({ titleButton, headerTitle, subHeaderTitle, o
                                                         '&:hover': {
                                                                 backgroundColor: '#F44336',
                                                                 color: 'white',
-                                                                pl: 1
+                                                                pl: 1,
                                                         },
                                                 }}
                                                 onClick={handleClose}
@@ -184,13 +259,18 @@ export default function DialogForm({ titleButton, headerTitle, subHeaderTitle, o
                                                                 backgroundColor: '#303F9F',
                                                         },
                                                 }}
-
                                                 onClick={handleCreateClick}
                                         >
-                                                إنشاء
+                                                {loading ? <CircularProgress size={24} style={{ color: 'white' }} />
+                                                        : 'إنشاء'}
                                         </Button>
                                 </DialogActions>
-                        </Dialog >
-                </React.Fragment >
+                        </Dialog>
+                        <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+                                <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarClose} severity="error">
+                                        {snackbarMessage}
+                                </MuiAlert>
+                        </Snackbar>
+                </React.Fragment>
         );
 }

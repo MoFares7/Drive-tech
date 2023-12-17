@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import TextField from '@mui/material/TextField'
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -13,28 +11,64 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import loginLogo from '../../assets/images/login.jpg';
-
+import { useSnackbar } from 'notistack';
 import { CircularProgress } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { setToken } from '../../services/Auth/tokenSlice';
+import { login } from '../../services/Auth/loginSlice';
 
 
 const defaultTheme = createTheme();
 
 export default function LoginPage() {
-        // const dispatch = useDispatch();
+        const dispatch = useDispatch();
         const [fieldsName, setfieldsName] = useState('');
         const [fieldsNameError, setfieldsNameError] = useState(false);
+        const [fieldsPassword, setfieldsPassword] = useState('');
+        const [fieldsPasswordError, setfieldsPasswordError] = useState(false);
+        const { enqueueSnackbar } = useSnackbar();
         const [loading, setLoading] = useState(false);
 
         const handelFillFields = () => {
-                // Perform validation
                 if (fieldsName.trim() === '') {
                         setfieldsNameError(true);
                 } else {
                         setfieldsNameError(false);
                 }
+                if (fieldsPassword.trim() === '') {
+                        setfieldsPasswordError(true);
+                } else {
+                        setfieldsPasswordError(false);
+                }
         };
-        const handleSubmit = async (event) => {
 
+        const handleSubmit = async (event) => {
+                event.preventDefault();
+                setLoading(true);
+                const data = new FormData(event.currentTarget);
+
+                const body = {
+                        name: data.get('name'),
+                        password: data.get('password'),
+                };
+
+                try {
+                        const resultAction = await dispatch(login(body));
+                        if (login.fulfilled.match(resultAction)) {
+                                const token = resultAction.payload.token;
+                                dispatch(setToken(token));
+                                window.location.href = '/';
+                        } else if (login.rejected.match(resultAction)) {
+                                // Handle rejection and display a Snackbar
+                                const errorMessage = resultAction.payload;
+                                enqueueSnackbar(errorMessage, { variant: 'error' });
+                        }
+                } catch (error) {
+                        // Handle other errors and display a Snackbar
+                        enqueueSnackbar('An error occurred during login.', { variant: 'error' });
+                } finally {
+                        setLoading(false);
+                }
         };
 
         return (
@@ -48,7 +82,7 @@ export default function LoginPage() {
 
                                 },
                                 width: '100%',
-                                
+
                         }}>
                                 <Grid container component="main" sx={{ height: '100vh', }}>
                                         <CssBaseline />
@@ -71,14 +105,14 @@ export default function LoginPage() {
                                                         }}>
                                                                 تسجيل الدخول
                                                         </Typography>
-                                                        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                                                        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
                                                                 <TextField
                                                                         margin="normal"
                                                                         required
                                                                         fullWidth
-                                                                        id="username"
+                                                                        id="name"
                                                                         label="اسم المستخدم"
-                                                                        name="username"
+                                                                        name="name"
                                                                         autoFocus
                                                                         error={fieldsNameError}
                                                                         helperText={fieldsNameError ? ' الحقل مطلوب' : ''}
@@ -105,22 +139,26 @@ export default function LoginPage() {
                                                                         label="كلمة المرور"
                                                                         type="password"
                                                                         id="password"
-                                                                        error={fieldsNameError}
-                                                                        helperText={fieldsNameError ? ' الحقل مطلوب' : ''}
+                                                                        error={fieldsPasswordError}
+                                                                        helperText={fieldsPasswordError ? 'كلمة المرور يجب أن تكون على الأقل 8 أحرف' : ''}
                                                                         onChange={(e) => {
-                                                                                setfieldsName(e.target.value);
-                                                                                if (e.target.value.trim() !== '') {
-                                                                                        setfieldsNameError(false);
+                                                                                const newPassword = e.target.value;
+                                                                                setfieldsPassword(newPassword);
+
+                                                                                if (newPassword.trim().length < 8) {
+                                                                                        setfieldsPasswordError(true);
+                                                                                } else {
+                                                                                        setfieldsPasswordError(false);
                                                                                 }
                                                                         }}
                                                                         InputLabelProps={{
                                                                                 style: {
                                                                                         fontFamily: 'Cairo',
                                                                                         fontSize: '12px',
-
                                                                                 },
                                                                         }}
                                                                 />
+
                                                                 {loading ? (
                                                                         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                                                                                 <CircularProgress />

@@ -10,8 +10,6 @@ import '@fontsource/cairo/400.css';
 import PublicGroupPage from './pages/GroupsPage/PublicGroup';
 import PrivetGroupPage from './pages/GroupsPage/PrivetGroup';
 import LoginPage from './pages/AuthPage/LoginPage';
-import SettingPage from './pages/SettingPage';
-import MyGroupPage from './pages/GroupsPage/MyGroupPage';
 import FilesPage from './pages/GroupsPage/FilesPage';
 import SignUpPage from './pages/AuthPage/SignUpPage';
 
@@ -29,11 +27,9 @@ function App() {
             <Route path="/signUp" element={<SignUpPage />} />
             <Route element={<SidebarLayout />}>
               <Route index element={<HomePage />} />
-              <Route path="/my-group" element={<MyGroupPage />} />
               <Route path="/public" element={<PublicGroupPage />} />
               <Route path="/privet" element={<PrivetGroupPage />} />
-              <Route path="/setting" element={<SettingPage />} />
-              <Route path="/files" element={<FilesPage />} />
+              <Route path="/files/:groupId" element={<FilesPage />} />
               <Route path="/login" element={<LoginPage />} />
             </Route>
           </Routes>

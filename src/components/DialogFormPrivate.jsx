@@ -6,41 +6,41 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import MainButton from './MainButton';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import MainButton from './MainButton';
+import MultipleSelectUser from './MultipleSelectUser';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import { useDispatch } from 'react-redux';
+import { addGroups, addGroupsStart, addGroupsSuccess, addGroupsFailure } from '../services/Group/addGroupSlice';
+import { getGroupsAboutType } from '../services/Group/getGroupsAboutTypeSlice';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function DialogFile({ titleButton, headerTitle, subHeaderTitle, onClick }) {
-        const [open, setOpen] = useState(false);
-        const [textFieldValue, setTextFieldValue] = useState('');
-        const [textFieldError, setTextFieldError] = useState('');
+export default function DialogFormPrivate({ titleButton, headerTitle, subHeaderTitle, onClick }) {
+        const [open, setOpen] = React.useState(false);
+        const [textFieldValue, setTextFieldValue] = React.useState('');
+        const [textFieldError, setTextFieldError] = React.useState('');
         const [selectedFile, setSelectedFile] = useState(null);
-        const [selectedUsers, setSelectedUsers] = useState([]);
         const fileInputRef = useRef(null);
-
+        const dispatch = useDispatch();
         const handleClickOpen = () => {
                 setOpen(true);
         };
 
         const handleClose = () => {
                 setOpen(false);
-                setTextFieldValue('');
-                setTextFieldError('');
-                setSelectedUsers([]);
         };
 
         const handleTextFieldChange = (event) => {
                 const value = event.target.value;
                 setTextFieldValue(value);
 
-                // Validation: Check if the value is empty and set error accordingly
+
                 if (value.trim() === '') {
                         setTextFieldError('الحقل مطلوب');
                 } else {
@@ -51,36 +51,76 @@ export default function DialogFile({ titleButton, headerTitle, subHeaderTitle, o
         const handleFileChange = (event) => {
                 const file = event.target.files[0];
                 setSelectedFile(file);
-                setTextFieldValue(file ? file.name : '');
+                setSelectedFile(file ? file.name : '');
         };
 
         const handleCreateClick = () => {
-                // Validation: Check if the value is empty before closing the dialog
-                if (textFieldValue.trim() === '') {
+                if (textFieldValue.trim() === '' && (!selectedFile || selectedFile.trim() === '')) {
                         setTextFieldError('الحقل مطلوب');
                 } else {
-                        // Perform other actions or close the dialog
-                        setOpen(false);
+                        dispatch(addGroupsStart());
 
-                        // Use the selected file and text field value as needed
-                        console.log('Selected File:', selectedFile);
-                        console.log('Text Field Value:', textFieldValue);
-                        setTextFieldValue('');
-                        setTextFieldError('');
-                        setSelectedUsers([]);
+                        //   Dispatch the addGroups action with the name as the body
+                        dispatch(addGroups({
+                                body:
+                                {
+                                        name: textFieldValue,
+                                        type: 'private'
+                                }
+                        }))
+                                .then(() => {
+                                        // Dispatch the addGroupsSuccess action on successful API call
+                                        dispatch(addGroupsSuccess());
+                                        dispatch(getGroupsAboutType('private'));
+                                        setOpen(false);
+                                })
+                                .catch((error) => {
+                                        dispatch(addGroupsFailure(error));
+                                })
+
                 }
         };
-
         return (
                 <React.Fragment>
-                        <MainButton width="300px" color="#3F51B5" title={titleButton} onClick={handleClickOpen} />
-
-                        <Dialog open={open} TransitionComponent={Transition} keepMounted onClose={handleClose}>
+                        <MainButton width="200px" color="#3F51B5" title={titleButton} onClick={handleClickOpen} />
+                        <Dialog
+                                open={open}
+                                TransitionComponent={Transition}
+                                keepMounted
+                                onClose={handleClose}
+                                aria-describedby="alert-dialog-slide-description"
+                        >
                                 <DialogTitle sx={{ fontFamily: 'Cairo' }}>{headerTitle}</DialogTitle>
+
                                 <DialogContent>
-                                        <DialogContentText id="alert-dialog-slide-description" sx={{ fontFamily: 'Cairo' }}>
-                                                {subHeaderTitle}
-                                        </DialogContentText>
+                                        <DialogContentText id="alert-dialog-slide-description" sx={{ fontFamily: 'Cairo' }}>{subHeaderTitle}</DialogContentText>
+
+                                        <TextField
+                                                label="اسم المجموعة"
+                                                value={textFieldValue}
+                                                onChange={handleTextFieldChange}
+                                                fullWidth
+                                                margin="normal"
+                                                variant="outlined"
+                                                required
+                                                error={Boolean(textFieldError)}
+                                                helperText={textFieldError}
+                                                InputLabelProps={{
+                                                        style: {
+                                                                // width: '100%',
+                                                                fontFamily: 'Cairo',
+                                                                // textAlign: 'right',
+                                                        },
+                                                }}
+                                                InputProps={{
+                                                        sx: {
+                                                                fontFamily: 'Cairo',
+                                                                borderTopRightRadius: 4,
+                                                                borderBottomRightRadius: 4,
+                                                                borderColor: textFieldError ? 'red' : undefined,
+                                                        },
+                                                }}
+                                        />
 
                                         <FormControl fullWidth sx={{}}>
                                                 <TextField
@@ -137,7 +177,7 @@ export default function DialogFile({ titleButton, headerTitle, subHeaderTitle, o
                                                         style={{ display: 'none' }}
                                                 />
                                         </FormControl>
-
+                                        <MultipleSelectUser />
                                 </DialogContent>
                                 <DialogActions>
                                         <Button
@@ -147,7 +187,7 @@ export default function DialogFile({ titleButton, headerTitle, subHeaderTitle, o
                                                         '&:hover': {
                                                                 backgroundColor: '#F44336',
                                                                 color: 'white',
-                                                                pl: 1,
+                                                                pl: 1
                                                         },
                                                 }}
                                                 onClick={handleClose}
@@ -163,12 +203,14 @@ export default function DialogFile({ titleButton, headerTitle, subHeaderTitle, o
                                                                 backgroundColor: '#303F9F',
                                                         },
                                                 }}
+
                                                 onClick={handleCreateClick}
                                         >
                                                 إنشاء
                                         </Button>
                                 </DialogActions>
-                        </Dialog>
-                </React.Fragment>
+                        </Dialog >
+                </React.Fragment >
         );
 }
+

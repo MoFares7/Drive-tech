@@ -6,12 +6,16 @@ import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
 import { red } from '@mui/material/colors';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import fileLogo from '../assets/images/pdf.png';
+import fileLogo from '../../../assets/images/pdf.png';
 import { Box, Button, IconButton, Typography, Popover, MenuItem, ListItemIcon } from '@mui/material';
-import { AddBusiness, AddToDrive, Delete, Details, DragIndicator, Edit, Folder, OpenInBrowser, Star } from '@mui/icons-material';
+import { Delete, OpenInBrowser } from '@mui/icons-material';
+import { deleteFile } from './../../../services/File/deleteFileSlice';
+import { getAllFiles } from './../../../services/File/getAllFilesSlice';
+import { useDispatch } from 'react-redux';
+import { downloadFile } from '../../../services/File/downloadFileSlice';
 
-export default function FileCard({ onClose, fileTitle, pusherName, pusherDate }) {
-
+export default function FileCard({ groupId, fileId, fileTitle, pusherName, pusherDate }) {
+        const dispatch = useDispatch();
         const [isPopoverOpen, setIsPopoverOpen] = useState(false);
         const [anchorEl, setAnchorEl] = useState(null);
 
@@ -24,14 +28,23 @@ export default function FileCard({ onClose, fileTitle, pusherName, pusherDate })
         const handleClosePopover = () => {
                 setIsPopoverOpen(false);
         };
-        const handleOptionClick = (option) => {
-                // Handle the selected option
-                console.log(`Selected option: ${option}`);
+        const handleOptionClick = async (option) => {
+                if (option === 'حذف الملف بشكل نهائي') {
+                        await dispatch(deleteFile(fileId));
+                        console.log('Deleted file. Now fetching all files...');
+                        await dispatch(getAllFiles(groupId));
+                        console.log('Fetched all files successfully.');
+                } else {
+                        if (option === 'تحميل الملف') {
+                                dispatch(downloadFile(fileId));
+                        }
+                }
                 handleClosePopover();
         };
 
+
         return (
-                <Card sx={{ maxWidth: 345, p: 1, m: 2, fontFamily: 'Cairo' }}>
+                <Card sx={{ maxWidth: 345, p: 1, m: 2, fontFamily: 'Cairo', borderRadius: 5 }}>
                         <CardHeader
                                 sx={{ fontFamily: 'Cairo' }}
                                 avatar={<Avatar sx={{ bgcolor: red[500], m: 1, }} aria-label="recipe">F</Avatar>}
@@ -70,25 +83,18 @@ export default function FileCard({ onClose, fileTitle, pusherName, pusherDate })
                                         horizontal: 'right',
                                 }}
                         >
-                                <MenuItem sx={{ fontFamily: 'Cairo' }} onClick={() => handleOptionClick('  ضمن المجموعة')}>
+                                <MenuItem sx={{ fontFamily: 'Cairo' }} onClick={() => handleOptionClick('تحميل الملف')}>
                                         <ListItemIcon>
                                                 <OpenInBrowser />
                                         </ListItemIcon>
-                                        فتح الملف
+                                        تحميل الملف
                                 </MenuItem>
-                                <MenuItem sx={{ fontFamily: 'Cairo' }} onClick={() => handleOptionClick('إضافة مستخدمين ضمن المجموعة')}>
+                                <MenuItem sx={{ fontFamily: 'Cairo' }} onClick={() => handleOptionClick('حذف الملف بشكل نهائي')}>
                                         <ListItemIcon>
                                                 <Delete />
                                         </ListItemIcon>
                                         حذف الملف بشكل نهائي
                                 </MenuItem>
-                                <MenuItem sx={{ fontFamily: 'Cairo' }} onClick={() => handleOptionClick('Option 2')}>
-                                        <ListItemIcon>
-                                                <Details />
-                                        </ListItemIcon>
-                                       تفاصيل الملف
-                                </MenuItem>
-                                {/* Add more options as needed */}
                         </Popover>
                 </Card>
         );

@@ -3,25 +3,30 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import loginLogo from '../../assets/images/signUp.jpg';
-
+import { useDispatch } from 'react-redux';
+import { setToken } from '../../services/Auth/tokenSlice';
 import { CircularProgress } from '@mui/material';
-
+import { register } from './../../services/Auth/signUpSlice';
+import { useSnackbar } from 'notistack';
 
 const defaultTheme = createTheme();
 
 export default function SignUpPage() {
+        const dispatch = useDispatch();
         const [fieldsName, setfieldsName] = useState('');
         const [fieldsNameError, setfieldsNameError] = useState(false);
+        const [fieldsEmail, setfieldsEmail] = useState('');
+        const [fieldsEmailError, setfieldsEmailError] = useState(false);
+        const [fieldsPassword, setfieldsPassword] = useState('');
+        const [fieldsPasswordError, setfieldsPasswordError] = useState(false);
+        const { enqueueSnackbar } = useSnackbar();
         const [loading, setLoading] = useState(false);
 
         const handelFillFields = () => {
@@ -31,9 +36,46 @@ export default function SignUpPage() {
                 } else {
                         setfieldsNameError(false);
                 }
+                if (fieldsEmail.trim() === '') {
+                        setfieldsEmailError(true);
+                } else {
+                        setfieldsEmailError(false);
+                }
+                if (fieldsPassword.trim() === '') {
+                        setfieldsPasswordError(true);
+                } else {
+                        setfieldsPasswordError(false);
+                }
         };
         const handleSubmit = async (event) => {
 
+                event.preventDefault();
+                setLoading(true);
+                const data = new FormData(event.currentTarget);
+
+                const body = {
+                        name: data.get('name'),
+                        email: data.get('email'),
+                        password: data.get('password'),
+                        role_id: 1,
+                };
+
+                try {
+                        const resultAction = await dispatch(register(body));
+                        if (register.fulfilled.match(resultAction)) {
+                                const token = resultAction.payload.token;
+                                dispatch(setToken(token));
+                                window.location.href = '/';
+                        } else if (register.rejected.match(resultAction)) {
+                                const errorMessage = resultAction.payload; // Get the custom error message
+                                enqueueSnackbar(errorMessage, { variant: 'error' });
+                        }
+                } catch (error) {
+                        // Handle other errors and display a Snackbar
+                        enqueueSnackbar('An error occurred during login.', { variant: 'error' });
+                } finally {
+                        setLoading(false);
+                }
         };
 
         return (
@@ -67,14 +109,14 @@ export default function SignUpPage() {
                                                         }}>
                                                                 إنشاء حساب في النظام
                                                         </Typography>
-                                                        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                                                        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
                                                                 <TextField
                                                                         margin="normal"
                                                                         required
                                                                         fullWidth
-                                                                        id="username"
+                                                                        id="name"
                                                                         label="اسم المستخدم"
-                                                                        name="username"
+                                                                        name="name"
                                                                         autoFocus
                                                                         error={fieldsNameError}
                                                                         helperText={fieldsNameError ? ' الحقل مطلوب' : ''}
@@ -96,23 +138,28 @@ export default function SignUpPage() {
                                                                         margin="normal"
                                                                         required
                                                                         fullWidth
-                                                                        id="username"
-                                                                        label="البريد الالكتروني "
-                                                                        name="username"
+                                                                        id="email"
+                                                                        label="البريد الالكتروني"
+                                                                        name="email"
                                                                         autoFocus
-                                                                        error={fieldsNameError}
-                                                                        helperText={fieldsNameError ? ' الحقل مطلوب' : ''}
+                                                                        error={fieldsEmailError}
+                                                                        helperText={fieldsPasswordError ? 'يجب إدخال بريد الكتروني صحيح' : ''}
                                                                         onChange={(e) => {
-                                                                                setfieldsName(e.target.value);
-                                                                                if (e.target.value.trim() !== '') {
-                                                                                        setfieldsNameError(false);
+                                                                                const newEmail = e.target.value;
+                                                                                setfieldsEmail(newEmail);
+
+                                                                                // Validate email format using a regular expression
+                                                                                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                                                                                if (!emailRegex.test(newEmail)) {
+                                                                                        setfieldsEmailError(true);
+                                                                                } else {
+                                                                                        setfieldsEmailError(false);
                                                                                 }
                                                                         }}
                                                                         InputLabelProps={{
                                                                                 style: {
                                                                                         fontFamily: 'Cairo',
                                                                                         fontSize: '12px',
-
                                                                                 },
                                                                         }}
                                                                 />
@@ -124,22 +171,26 @@ export default function SignUpPage() {
                                                                         label="كلمة المرور"
                                                                         type="password"
                                                                         id="password"
-                                                                        error={fieldsNameError}
-                                                                        helperText={fieldsNameError ? ' الحقل مطلوب' : ''}
+                                                                        error={fieldsPasswordError}
+                                                                        helperText={fieldsPasswordError ? 'كلمة المرور يجب أن تكون على الأقل 8 أحرف' : ''}
                                                                         onChange={(e) => {
-                                                                                setfieldsName(e.target.value);
-                                                                                if (e.target.value.trim() !== '') {
-                                                                                        setfieldsNameError(false);
+                                                                                const newPassword = e.target.value;
+                                                                                setfieldsPassword(newPassword);
+
+                                                                                if (newPassword.trim().length < 8) {
+                                                                                        setfieldsPasswordError(true);
+                                                                                } else {
+                                                                                        setfieldsPasswordError(false);
                                                                                 }
                                                                         }}
                                                                         InputLabelProps={{
                                                                                 style: {
                                                                                         fontFamily: 'Cairo',
                                                                                         fontSize: '12px',
-
                                                                                 },
                                                                         }}
                                                                 />
+
                                                                 {loading ? (
                                                                         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                                                                                 <CircularProgress />
@@ -158,7 +209,7 @@ export default function SignUpPage() {
                                                                                 }}
                                                                         >
                                                                                 إنشاء حساب
-                                                                                </Button>
+                                                                        </Button>
                                                                 )}
                                                                 <Grid container justifyContent="center">
                                                                         <Grid item>
