@@ -6,12 +6,9 @@ import { useDispatch } from 'react-redux';
 import { deleteGroup } from './../../../services/Group/deleteGroupSlice';
 import { getGroups } from './../../../services/Group/getGroupSlice';
 import { addUserInGroup } from './../../../services/Group/addUserInGroup';
-import MultipleSelectUser from '../../../components/MultipleSelectUser';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 import { leaveUserFromGroup } from './../../../services/Group/leaveUserFromGroup';
 import { getGroupsAboutType } from '../../../services/Group/getGroupsAboutTypeSlice';
+import DialogGroupOperation from '../../../components/DialogGroupsOperation';
 
 const GroupCard = ({ title, backgroundColor, type, userId, groupId, groupType }) => {
         const dispatch = useDispatch();
@@ -21,7 +18,15 @@ const GroupCard = ({ title, backgroundColor, type, userId, groupId, groupType })
         const [selectedUserIds, setSelectedUserIds] = useState([]);
         const navigate = useNavigate();
         const [addButton, setAddButton] = useState('add');
+        const [open, setOpen] = useState(false);
 
+        const handleClickOpen = () => {
+                setOpen(true);
+        };
+        const handleClose = () => {
+                setOpen(false);
+
+        }
         const handleIconClick = (event) => {
                 event.stopPropagation();
                 setAnchorEl(event.currentTarget);
@@ -31,10 +36,12 @@ const GroupCard = ({ title, backgroundColor, type, userId, groupId, groupType })
         const handleClosePopover = () => {
                 setIsPopoverOpen(false);
         };
+        console.log(selectedUserIds + 'this id ');
 
         const handleOptionClick = async (option) => {
                 if (option === 'حذف المجموعة') {
                         dispatch(deleteGroup(groupId));
+                        dispatch(getGroups());
                         dispatch(getGroupsAboutType(groupType));
                 } else if (option === 'إضافة مستخدمين ضمن المجموعة') {
                         try {
@@ -42,7 +49,8 @@ const GroupCard = ({ title, backgroundColor, type, userId, groupId, groupType })
                                 await dispatch(addUserInGroup({ groupId: groupId, userId: userId }));
 
                                 // If the dispatch was successful, set the dialog open
-                                setIsDialogOpen(true);
+                                handleClickOpen();
+
                         } catch (error) {
                                 // Handle the error if the dispatch fails
                                 console.error('Error adding user to group:', error);
@@ -153,7 +161,9 @@ const GroupCard = ({ title, backgroundColor, type, userId, groupId, groupType })
                                         </ListItemIcon>
                                         حذف المجموعة
                                 </MenuItem>
-                                <MenuItem sx={{ fontFamily: 'Cairo' }} onClick={() => handleOptionClick('إضافة مستخدمين ضمن المجموعة')}>
+                                <MenuItem sx={{ fontFamily: 'Cairo' }} onClick={() =>
+                                        handleOptionClick('إضافة مستخدمين ضمن المجموعة')
+                                }>
                                         <ListItemIcon>
                                                 <AddBusiness />
                                         </ListItemIcon>
@@ -167,29 +177,12 @@ const GroupCard = ({ title, backgroundColor, type, userId, groupId, groupType })
                                 </MenuItem>
                                 {/* Add more options as needed */}
                         </Popover>
-                        <Dialog open={isDialogOpen} onClose={handleCloseDialog}>
-                                <DialogTitle sx={{ fontFamily: 'Cairo' }}>حدد المستخدمين</DialogTitle>
-                                <DialogContent>
-                                        {/* Pass the callback function to the MultipleSelectUser component */}
-                                        <MultipleSelectUser onUsersSelected={setSelectedUserIds} />
-                                </DialogContent>
-                                <DialogActions>
-                                        {/* ... (other JSX) */}
-                                        <Button
-                                                sx={{
-                                                        backgroundColor: '#272356',
-                                                        color: 'white',
-                                                        fontFamily: 'Cairo',
-                                                        '&:hover': {
-                                                                backgroundColor: '#303F9F',
-                                                        },
-                                                }}
-                                                onClick={handleCreateClick}
-                                        >
-                                                إضافة
-                                        </Button>
-                                </DialogActions>
-                        </Dialog>
+                        <DialogGroupOperation
+                                open={open}
+                                headerTitle="إضافة مستخدم ضمن هذه المجموعة"
+                                subHeaderTitle="الرجاء قم بإدخال البريد الالكتروني"
+                                handleClose={handleClose}
+                        />
                 </React.Fragment>
         );
 };

@@ -4,7 +4,6 @@ import GroupCard from '../HomePage/components/GroupCard';
 import DialogForm from './../../components/DialogForm';
 import SearchHeader from '../../components/SearchHeader';
 import Header from '../HomePage/components/HeaderCard';
-import DialogFormPrivate from '../../components/DialogFormPrivate';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGroupsAboutType } from './../../services/Group/getGroupsAboutTypeSlice';
 import NoData from '../../components/NoData';
@@ -109,7 +108,8 @@ const PrivetGroupPage = () => {
         justifyContent: 'center',
         justifyItems: 'center',
       }}>
-        <DialogFormPrivate
+        <DialogForm
+          typeGroup='private'
           titleButton="إضافة مجموعة خاصة "
           headerTitle="إنشاء مجموعة خاصة"
           subHeaderTitle="الرجاء قم بإدخال اسم المجموعة التي تريد إنشائها   "

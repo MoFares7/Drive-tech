@@ -25,11 +25,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function DialogForm({ titleButton, headerTitle, subHeaderTitle, onClick }) {
-        const [open, setOpen] = React.useState(false);
-        const [textFieldValue, setTextFieldValue] = React.useState('');
-        const [emailFieldValue, setEmailFieldValue] = React.useState('');
-        const [textFieldError, setTextFieldError] = React.useState('');
+export default function DialogForm({ typeGroup, titleButton, headerTitle, subHeaderTitle, onClick }) {
+        const [open, setOpen] = useState(false);
+        const [textFieldValue, setTextFieldValue] = useState('');
+        const [emailFieldValue, setEmailFieldValue] = useState('');
+        const [textFieldError, setTextFieldError] = useState('');
         const [selectedFile, setSelectedFile] = useState(null);
         const [loading, setLoading] = useState(false);
         const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -79,7 +79,7 @@ export default function DialogForm({ titleButton, headerTitle, subHeaderTitle, o
 
                         const formData = new FormData();
                         formData.append("name", textFieldValue);
-                        formData.append("type", 'public');
+                        formData.append("type", typeGroup);
                         formData.append("filename", 'aaaa');
                         formData.append("link", selectedFile);
                         formData.append("email", emailFieldValue);
@@ -96,7 +96,8 @@ export default function DialogForm({ titleButton, headerTitle, subHeaderTitle, o
                                 });
 
                                 dispatch(addGroupsSuccess());
-                                dispatch(getGroupsAboutType('public'));
+                                dispatch(getGroupsAboutType(typeGroup));
+                                console.log(typeGroup + "this is abbbb");
                                 setOpen(false);
                                 setLoading(false);
                                 setTextFieldValue('');

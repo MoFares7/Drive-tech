@@ -3,15 +3,16 @@ import axios from 'axios';
 
 export const addUserInGroup = createAsyncThunk(
         'api/group/join/user',
-        async ({ groupId, userId }) => {
+        async ({ groupId, user_id }) => {
                 try {
                         const response = await axios.post(
                                 `http://127.0.0.1:8000/api/group/join/user/${groupId}`,
-                                { userId }, 
+                                { user_id },
                                 {
                                         headers: {
                                                 Authorization: `Bearer ${localStorage.getItem('token')}`,
                                         },
+                                      
                                 }
                         );
                         console.log('add User Group:', response.data);

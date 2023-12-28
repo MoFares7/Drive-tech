@@ -75,7 +75,7 @@ const PublicGroupPage = () => {
                                                                                         type={group.group.type}
                                                                                         userId={group.userId}
                                                                                         groupId={group.group_id}
-                                                                                        groupType= 'public'
+                                                                                        groupType='public'
                                                                                 />
                                                                         ))}
                                                                 </Box>
@@ -98,6 +98,7 @@ const PublicGroupPage = () => {
                         }}>
 
                                 <DialogForm
+                                        typeGroup='public'
                                         titleButton="إضافة مجموعة عامة "
                                         headerTitle="إنشاء مجموعة عامة"
                                         subHeaderTitle="الرجاء قم بإدخال اسم المجموعة التي تريد إنشائها   "

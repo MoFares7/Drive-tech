@@ -33,7 +33,7 @@ const deleteGroupSlice = createSlice({
                         })
                         .addCase(deleteGroup.fulfilled, (state, action) => {
                                 state.isLoading = false;
-                               
+
                         })
                         .addCase(deleteGroup.rejected, (state, action) => {
                                 state.isLoading = false;
